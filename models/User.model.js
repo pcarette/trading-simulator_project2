@@ -10,6 +10,7 @@ const userSchema = new Schema(
       require: true,
     },
     password: { type: String, require: true },
+    cash: Number,
     holdingsValue: Number,
   },
   {
@@ -27,6 +28,12 @@ userSchema.methods.calculateHoldingsValue =
     myHoldings.forEach(holding => {
       myHoldingsValue += holding.calculateHoldingValue()
     });
+    return myHoldingsValue
+  };
+
+  userSchema.methods.updateCash =
+  async function updateCash(update) {
+    this.cash = this.cash + update
   };
 
 module.exports = User;
