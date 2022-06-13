@@ -6,5 +6,8 @@ router.get("/", (req, res, next) => {
 
 // You put the next routes here 👇
 // example: router.use("/auth", authRoutes)
+router.use('/auth', require('./auth.routes'))
+router.use('/user', require('./user.routes'))
+router.use('/transaction', require('./transaction.routes'))
 
 module.exports = router;
