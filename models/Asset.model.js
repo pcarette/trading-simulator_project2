@@ -8,13 +8,21 @@ const assetSchema = new Schema(
 
     name : String, //Example : Bitcoin
     symbol : String, //Example : BTC
-    valueAtInstant : Number
+    value : Number, 
+    image: String,
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
     timestamps: true,
   }
 );
+
+assetSchema.methods.calculateAssetValue =
+  function calculateAssetValue() {
+    //To fetch with the API
+    this.value
+  };
+
 
 const Asset = model("Asset", assetSchema);
 

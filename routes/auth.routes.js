@@ -7,18 +7,19 @@ const saltRounds = 10;
 
 // SignUp route
 router.post("/signup", async (req, res, next) => {
+  console.log("run");
   try {
-    const { username, password } = req.body;
-    // Checking if username is an empty string
-    if (!username) {
-      res.status(400).json({ message: "Username cannot be empty" });
+    const { email, password } = req.body;
+    // Checking if email is an empty string
+    if (!email) {
+      res.status(400).json({ message: "Email cannot be empty" });
       return;
     }
 
-    //Checking if username already exist
-    const isUsernameExists = await User.findOne({ username });
-    if (isUsernameExists) {
-      res.status(400).json({ message: `Username already exists` });
+    //Checking if email already exist
+    const emailFound = await User.findOne({ email });
+    if (emailFound) {
+      res.status(400).json({ message: `Email already exists` });
       return;
     }
 
@@ -28,8 +29,10 @@ router.post("/signup", async (req, res, next) => {
 
     // Create user in DB
     const createdUser = await User.create({
-      username,
+      email,
       password: hashedPassword,
+      cash: 100000,
+      holdingsValue: 0,
     });
 
     res.status(201).json({ createdUser });
@@ -43,28 +46,29 @@ router.post("/signup", async (req, res, next) => {
 
 // Login route
 router.get("/login", async (req, res, next) => {
+  console.log('run');
   try {
     // Get body
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
-    // Check username
-    const foundUsername = await User.findOne({ username });
+    // Check email
+    const foundEmail = await User.findOne({ email });
     // Check password
     const isPasswordMatched = await bcrypt.compare(
       password,
-      foundUsername.password
+      foundEmail.password
     );
-    if ((!foundUsername) || (!isPasswordMatched)) {
-      res.status(400).json({ message: `Username or password incorrect` });
+    if (!foundEmail || !isPasswordMatched) {
+      res.status(400).json({ message: `email or password incorrect` });
       return;
     }
 
-    const playload = { username };
+    const playload = { email };
 
     // Create auth token
     const authToken = jsonwebtoken.sign(playload, process.env.TOKEN_SECRET, {
       algorithm: "HS256",
-      expiresIn: "30s",
+      expiresIn: "24h",
     });
 
     // Connect user
@@ -76,7 +80,6 @@ router.get("/login", async (req, res, next) => {
     next(error);
   }
 });
-
 
 // Verify route
 router.get("/verify", async (req, res, next) => {

@@ -9,5 +9,6 @@ router.get("/", (req, res, next) => {
 router.use('/auth', require('./auth.routes'))
 router.use('/user', require('./user.routes'))
 router.use('/transaction', require('./transaction.routes'))
+router.use('/holding', require('./holding.routes'))
 
 module.exports = router;

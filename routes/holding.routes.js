@@ -2,12 +2,12 @@ const router = require("express").Router();
 const isAuthenticated = require('../middleware/isAuthenticated')
 // require Transaction
 
-//Create one specific having
+//Create one specific Holding
 router.post("/", isAuthenticated, async (req, res, next) => {
   try {
-    const newHaving = req.body;
-    const createdHaving = await User.create(newHaving);
-    res.status(200).json(createdHaving);
+    const newHolding = req.body;
+    const createdHolding = await User.create(newHolding);
+    res.status(200).json(createdHolding);
 
   } catch (error) {
     console.log(error);
@@ -15,14 +15,14 @@ router.post("/", isAuthenticated, async (req, res, next) => {
   }
 });
 
-// Read & calculate one specific having
+// Read & calculate one specific Holding
 router.get("/id", isAuthenticated, async (req, res, next) => {
   try {
     const id = req.params.id;
-    const having = await User.findById(id);
-    res.status(200).json(having);
+    const Holding = await User.findById(id);
+    res.status(200).json(Holding);
 
-    // To do: calculate having value
+    // To do: calculate Holding value
 
   } catch (error) {
     console.log(error);
@@ -30,18 +30,18 @@ router.get("/id", isAuthenticated, async (req, res, next) => {
   }
 });
 
-// Update one specific having
+// Update one specific Holding
 router.patch("/:id", isAuthenticated, async (req, res, next) => {
   try {
     const id = req.params.id;
     const update = req.body;
-    const updatedHaving = await User.findByIdAndUpdate(id, update, {
+    const updatedHolding = await User.findByIdAndUpdate(id, update, {
       new: true,
     });
 
-    // To do: calculate having value
+    // To do: calculate Holding value
 
-    res.status(200).json(updatedHaving);
+    res.status(200).json(updatedHolding);
 
     // update user cash
   } catch (error) {
