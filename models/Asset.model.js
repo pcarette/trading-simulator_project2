@@ -3,8 +3,8 @@ const { Schema, model, SchemaTypes } = require("mongoose");
 const assetSchema = new Schema(
   {
     category : 
-        {type : SchemaTypes.String,
-        enum : ["Crypto", "Stock", "RawMat"]},
+        {type : String,
+        enum : ["Crypto", "Stock", "Raw Material"]},
 
     name : String, //Example : Bitcoin
     symbol : String, //Example : BTC
@@ -16,6 +16,6 @@ const assetSchema = new Schema(
   }
 );
 
-const Asset = model("Transaction", assetSchema);
+const Asset = model("Asset", assetSchema);
 
 module.exports = Asset;
