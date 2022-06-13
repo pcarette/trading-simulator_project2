@@ -19,7 +19,7 @@ const transactionSchema = new Schema(
     },
 
     amount: Number, //(+ if sell, - if buy)
-    shareValue: Number,
+    valueAtGivenTime: Number,
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
@@ -27,13 +27,14 @@ const transactionSchema = new Schema(
   }
 );
 
-transactionSchema.methods.calculateValue =
-  async function calculateValue() {
+transactionSchema.methods.calculateAssetValueAtGivenTime =
+  async function calculateAssetValueAtGivenTime() {
     try {
       const assetId = this.asset
       const myAsset = await Asset.findById(assetId)
       const assetValue = myAsset.calculateAssetValue()
-      this.shareValue = assetValue
+      this.valueAtGivenTime = assetValue
+      return assetValue
     } catch (error) {
       
     }

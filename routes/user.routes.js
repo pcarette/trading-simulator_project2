@@ -1,29 +1,12 @@
 const router = require("express").Router();
 const isAuthenticated = require("../middleware/isAuthenticated");
+const User = require("../models/User.model");
 
 // Get all user
 router.get("/", isAuthenticated, async (req, res, next) => {
   try {
-    const id = req.params.id;
-    // To do: calculate all havings
-
-    const { havingValue } = await User.findById(id);
-    res.status(200).json(havingValue);
-  } catch (error) {
-    console.log(error);
-    next(error);
-  }
-});
-
-
-// Read & calculate all user havings value
-router.get("/:id", isAuthenticated, async (req, res, next) => {
-  try {
-    const id = req.params.id;
-    // To do: calculate all havings
-
-    const { havingValue } = await User.findById(id);
-    res.status(200).json(havingValue);
+    const allUsers = await User.find();
+    res.status(200).json(allUsers);
   } catch (error) {
     console.log(error);
     next(error);
@@ -31,9 +14,9 @@ router.get("/:id", isAuthenticated, async (req, res, next) => {
 });
 
 // Read user cash
-router.get("/:id", isAuthenticated, async (req, res, next) => {
+router.get("/cash", isAuthenticated, async (req, res, next) => {
   try {
-    const id = req.params.id;
+    const id = req.user._id;
     const { cash } = await User.findById(id);
     res.status(200).json(cash);
   } catch (error) {
@@ -42,10 +25,23 @@ router.get("/:id", isAuthenticated, async (req, res, next) => {
   }
 });
 
-// Delete one user
-router.delete("/:id", isAuthenticated, async (req, res, next) => {
+// Read user holdings value
+router.get("/holdings", isAuthenticated, async (req, res, next) => {
   try {
-    const id = req.params.id;
+    const id = req.user._id;
+    const myUser = await User.findById(id);
+    const holdingValue = myUser.calculateHoldingsValue();
+    res.status(200).json(holdingValue);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+// Delete one user
+router.delete("/", isAuthenticated, async (req, res, next) => {
+  try {
+    const id = req.user._id;
     await User.findByIdAndDelete(id);
     res.status(200).json({ message: "User successfully deleted" });
   } catch (error) {

@@ -14,7 +14,6 @@ const holdingSchema = new Schema(
     },
 
     amount: Number,
-    value: Number,
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
