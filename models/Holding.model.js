@@ -1,6 +1,6 @@
 const { Schema, model, SchemaTypes } = require("mongoose");
 
-const havingSchema = new Schema(
+const holdingSchema = new Schema(
   {
     user: {
       type : SchemaTypes.ObjectId,
@@ -14,7 +14,6 @@ const havingSchema = new Schema(
 
     amount : Number,
     value : Number, //To fetch with the API
-    calculateValue : Function // ! Probably not the correct way to declare a function in a schema !
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
@@ -22,6 +21,6 @@ const havingSchema = new Schema(
   }
 );
 
-const Having = model("Having", havingSchema);
+const Holding = model("Holding", holdingSchema);
 
-module.exports = Having;
+module.exports = Holding;

@@ -13,7 +13,7 @@ const userSchema = new Schema(
     email : String,
     cash : Number,
     havingsValue : Number,
-    calculateAllHavings : Function // ! Probably not the correct way to declare a function in a schema !
+    calculateAllHoldings : Function // ! Probably not the correct way to declare a function in a schema !
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
@@ -22,5 +22,12 @@ const userSchema = new Schema(
 );
 
 const User = model("User", userSchema);
+
+userSchema.methods.calculateAllHoldings = function calculateAllHoldings() {
+  console.log('je cherche this : ',this);
+  console.log('of type : ',typeof this);
+
+};
+
 
 module.exports = User;
