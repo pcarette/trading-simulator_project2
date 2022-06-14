@@ -30,6 +30,7 @@ router.get("/holdings", isAuthenticated, async (req, res, next) => {
   try {
     const id = req.user._id;
     const myUser = await User.findById(id);
+    // console.log('myUser', myUser);
     const holdingValue = myUser.calculateHoldingsValue();
     res.status(200).json(holdingValue);
   } catch (error) {
@@ -39,7 +40,7 @@ router.get("/holdings", isAuthenticated, async (req, res, next) => {
 });
 
 // Delete one user
-router.delete("/", isAuthenticated, async (req, res, next) => {
+router.delete("/:id", isAuthenticated, async (req, res, next) => {
   try {
     const id = req.user._id;
     await User.findByIdAndDelete(id);

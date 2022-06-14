@@ -1,13 +1,13 @@
 const router = require("express").Router();
-const isAuthenticated = require('../middleware/isAuthenticated')
+const isAuthenticated = require('../middleware/isAuthenticated');
+const Holding = require("../models/Holding.model");
 // require Transaction
 
-//Create one specific Holding
-router.post("/", isAuthenticated, async (req, res, next) => {
+// Read all holdings
+router.get("/", async (req, res, next) => {
   try {
-    const newHolding = req.body;
-    const createdHolding = await User.create(newHolding);
-    res.status(200).json(createdHolding);
+    const holdings = await Holding.find();
+    res.status(200).json(holdings);
 
   } catch (error) {
     console.log(error);
