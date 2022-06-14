@@ -22,10 +22,11 @@ const userSchema = new Schema(
 userSchema.methods.calculateHoldingsValue =
   async function calculateHoldingsValue() {
     const myHoldings = await Holding.find({ user: this._id });
-    const myHoldingsValue = 0;
-    myHoldings.forEach((holding) => {
-      myHoldingsValue += holding.calculateHoldingValue();
+    const myArray = myHoldings.map(async (holding) => {
+      return await holding.calculateHoldingValue();
     });
+    const holdingsArray = await Promise.all(myArray);
+    const myHoldingsValue = holdingsArray.reduce((p, v) => p + v, 0);
     return myHoldingsValue;
   };
 

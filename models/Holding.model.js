@@ -14,7 +14,6 @@ const holdingSchema = new Schema(
       ref: "Asset",
       require: true,
     },
-
     amount: { type: Number, require: true },
   },
   {
@@ -28,8 +27,7 @@ holdingSchema.methods.calculateHoldingValue =
     try {
       const assetId = this.asset;
       const myAsset = await Asset.findById(assetId);
-      const assetValue = myAsset.calculateAssetValue();
-      // this.value = assetValue
+      const assetValue = await myAsset.calculateAssetValue();
       return assetValue * this.amount;
     } catch (error) {
       console.error(error);

@@ -25,14 +25,13 @@ router.get("/cash", isAuthenticated, async (req, res, next) => {
   }
 });
 
-// Read user holdings value
+// Read (and calculate) user holdings value
 router.get("/holdings", isAuthenticated, async (req, res, next) => {
   try {
     const id = req.user._id;
     const myUser = await User.findById(id);
-    // console.log('myUser', myUser);
-    const holdingValue = myUser.calculateHoldingsValue();
-    res.status(200).json(holdingValue);
+    const holdingsValue = await myUser.calculateHoldingsValue();
+    res.status(200).json(holdingsValue);
   } catch (error) {
     console.log(error);
     next(error);

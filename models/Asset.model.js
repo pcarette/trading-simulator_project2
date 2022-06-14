@@ -7,7 +7,6 @@ const assetSchema = new Schema(
 
     name: String, //Example : Bitcoin
     symbol: String, //Example : BTC
-    // value: Number,
     image: String,
   },
   {

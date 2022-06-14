@@ -22,7 +22,7 @@ const transactionSchema = new Schema(
 
     amount: { type: Number, require: true }, //(+ if sell, - if buy)
     valueAtGivenTime: { type: Number, require: true },
-    // totalPriceInDollars: { type: Number, require: true }
+    // totalPriceInDollars: { type: Number, require: true } amout * valueAtGivenTime
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
