@@ -25,7 +25,6 @@ assetSchema.methods.calculateAssetValue = async function calculateAssetValue() {
           const promiseAssetValue = await axios(
               `https://api.binance.com/api/v3/avgPrice?symbol=${this.symbol}USDT`
               );
-              console.log(promiseAssetValue.data.price);
               return promiseAssetValue.data.price;
         } catch(err) {
             console.log(err)
