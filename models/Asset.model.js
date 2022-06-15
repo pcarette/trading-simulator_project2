@@ -34,7 +34,6 @@ assetSchema.methods.calculateAssetValue = async function calculateAssetValue() {
         const promiseAssetValue = await axios(
             `https://cloud.iexapis.com/stable/tops?token=${TOKEN}&symbols=${this.symbol}`
             );
-           console.log(promiseAssetValue.data[0].lastSalePrice);
            return promiseAssetValue.data[0].lastSalePrice;
         } catch (err) {
             console.log(err);
