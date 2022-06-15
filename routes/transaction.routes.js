@@ -41,7 +41,7 @@ router.post("/buy", isAuthenticated, async (req, res, next) => {
     );
 
     // Update user cash
-    await updateCash(userId, cash, createdTransaction.amount, myAssetValue);
+    await updateCash(userId, cash, createdTransaction.transactionPrice);
 
     // Create OR Update holding
     if (!holding) {
@@ -95,7 +95,7 @@ router.post("/sell", isAuthenticated, async (req, res, next) => {
     );
 
     // Update user cash
-    await updateCash(userId, cash, createdTransaction.amount, myAssetValue);
+    await updateCash(userId, cash, createdTransaction.transactionPrice);
 
     // Update holding
     const updatedHolding = await updateHolding(holding, createdTransaction);

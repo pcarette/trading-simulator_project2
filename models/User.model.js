@@ -27,7 +27,9 @@ userSchema.methods.calculateHoldingsValue =
     });
     const holdingsArray = await Promise.all(myArray);
     const myHoldingsValue = holdingsArray.reduce((p, v) => p + v, 0);
-    return myHoldingsValue;
+    this.holdingsValue = myHoldingsValue;
+    await this.save();
+    return this.holdingsValue;
   };
 
 const User = model("User", userSchema);

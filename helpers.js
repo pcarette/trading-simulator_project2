@@ -2,9 +2,8 @@ const User = require("./models/User.model");
 const Transaction = require("./models/Transaction.model");
 const Holding = require("./models/Holding.model");
 
-async function updateCash(userId, currentCash, amount, assetValue) {
-  const price = amount * assetValue;
-  const newCash = currentCash + price;
+async function updateCash(userId, currentCash, transactionPrice) {
+  const newCash = currentCash + transactionPrice;
   await User.findByIdAndUpdate(userId, { cash: newCash });
 }
 
@@ -21,12 +20,14 @@ async function createTransaction(
     amount = Math.abs(amount);
     console.log({ amount });
   }
+  const transactionPrice = amount * assetValue;
   const createdTransaction = await Transaction.create({
     user: userId,
     asset,
     transactionType,
     amount,
     valueAtGivenTime: assetValue,
+    transactionPrice,
   });
   return createdTransaction;
 }

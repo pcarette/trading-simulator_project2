@@ -3,10 +3,24 @@ const isAuthenticated = require("../middleware/isAuthenticated");
 const User = require("../models/User.model");
 
 // Get all user
-router.get("/", isAuthenticated, async (req, res, next) => {
+router.get("/all", isAuthenticated, async (req, res, next) => {
   try {
     const allUsers = await User.find();
     res.status(200).json(allUsers);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+// Get current user
+router.get("/", isAuthenticated, async (req, res, next) => {
+  try {
+    const userId = req.user._id
+    let myUser = await User.findById(userId);
+    await myUser.calculateHoldingsValue()
+    myUser = await User.findById(userId);
+    res.status(200).json(myUser);
   } catch (error) {
     console.log(error);
     next(error);
