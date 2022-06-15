@@ -21,10 +21,7 @@ router.post("/", isAuthenticated, async (req, res, next) => {
     const assetId = newTransaction.asset;
     const { cash } = await User.findById(userId);
     const holding = await Holding.findOne({ user: userId, asset: assetId });
-    // Evaluate transaction
     const transactionType = newTransaction.transactionType;
-
-    // Calculate asset Value
     const myAsset = await Asset.findById(assetId);
     const myAssetValue = await myAsset.calculateAssetValue();
 
@@ -38,8 +35,12 @@ router.post("/", isAuthenticated, async (req, res, next) => {
 
     // Check if enough holding
     if (transactionType === "SELL") {
+      if (!holding) {
+        res.status(401).json({ message: `You don't own any holdings` });
+        return;
+      }
       if (holding.amount < newTransaction.amount) {
-        res.status(401).json({ message: `You don't have enough holdings` });
+        res.status(401).json({ message: `You don't own enough holdings` });
         return;
       }
     }
@@ -50,20 +51,15 @@ router.post("/", isAuthenticated, async (req, res, next) => {
       userId,
       myAssetValue
     );
-    console.log({ createdTransaction });
 
     // Update user cash
-    await updateCash(newTransaction.amount, myAssetValue, cash, userId);
+    await updateCash(createdTransaction.amount, myAssetValue, cash, userId);
 
     //
-    // TO do : Create OR Update OR DELETE holding
+    // TO do : Create OR Update holding
     //
-    const foundHolding = await Holding.findOne({
-      user: userId,
-      asset: assetId,
-    });
     if (transactionType === "BUY") {
-      if (!foundHolding) {
+      if (!holding) {
         const createdHolding = await createHolding(
           userId,
           assetId,
@@ -72,21 +68,16 @@ router.post("/", isAuthenticated, async (req, res, next) => {
         res.status(200).json({ createdTransaction, createdHolding });
         return;
       } else {
-        const updatedHolding = await updateHolding(foundHolding, createdTransaction);
+        const updatedHolding = await updateHolding(holding, createdTransaction);
         res.status(200).json({ createdTransaction, updatedHolding });
         return;
       }
     }
 
     if (transactionType === "SELL") {
-      if (!foundHolding) {
-        res.status(401).json({ message: `You don't have any holdings` });
-        return;
-      } else {
-        const updatedHolding = updateHolding(foundHolding, createdTransaction);
-        res.status(200).json({ createdTransaction, updatedHolding });
-        return;
-      }
+      const updatedHolding = updateHolding(holding, createdTransaction);
+      res.status(200).json({ createdTransaction, updatedHolding });
+      return;
     }
   } catch (error) {
     console.log(error);

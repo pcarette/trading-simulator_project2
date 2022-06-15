@@ -4,11 +4,11 @@ const Holding = require("../models/Holding.model");
 const User = require("../models/User.model");
 
 // Read one holding (and calculate)
-router.get("/id", isAuthenticated, async (req, res, next) => {
+router.get("/:id", isAuthenticated, async (req, res, next) => {
   try {
     const id = req.params.id;
     const userId = req.user._id;
-    const holding = await Holding.findOne({ id, user: userId });
+    let holding = await Holding.findOne({ id, user: userId });
     await holding.calculateHoldingValue();
     holding = await Holding.findOne({ id, user: userId }).populate("asset", {
       name: 1,
