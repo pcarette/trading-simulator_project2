@@ -19,21 +19,19 @@ const userSchema = new Schema(
   }
 );
 
-const User = model("User", userSchema);
-
 userSchema.methods.calculateHoldingsValue =
   async function calculateHoldingsValue() {
-    const myHoldings = await Holding.find({user: this._id})
-    const myHoldingsValue = 0
-    myHoldings.forEach(holding => {
-      myHoldingsValue += holding.calculateHoldingValue()
+    const myHoldings = await Holding.find({ user: this._id });
+    const myArray = myHoldings.map(async (holding) => {
+      return await holding.calculateHoldingValue();
     });
-    return myHoldingsValue
+    const holdingsArray = await Promise.all(myArray);
+    const myHoldingsValue = holdingsArray.reduce((p, v) => p + v, 0);
+    this.holdingsValue = myHoldingsValue;
+    await this.save();
+    return this.holdingsValue;
   };
 
-  userSchema.methods.updateCash =
-  async function updateCash(update) {
-    this.cash = this.cash + update
-  };
+const User = model("User", userSchema);
 
 module.exports = User;

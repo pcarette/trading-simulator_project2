@@ -6,39 +6,29 @@ const transactionSchema = new Schema(
     user: {
       type: SchemaTypes.ObjectId,
       ref: "User",
-      // unique: true -> Ideally, should be unique, but its up to you
+      require: true,
     },
     asset: {
       type: SchemaTypes.ObjectId,
       ref: "Asset",
+      require: true,
     },
 
     transactionType: {
       type: String,
       enum: ["BUY", "SELL"],
+      require: true,
     },
 
-    amount: Number, //(+ if sell, - if buy)
-    valueAtGivenTime: Number,
+    amount: { type: Number, require: true }, //(+ if sell, - if buy)
+    valueAtGivenTime: { type: Number, require: true },
+    transactionPrice: { type: Number, require: true }, //amout * valueAtGivenTime
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
     timestamps: true,
   }
 );
-
-transactionSchema.methods.calculateAssetValueAtGivenTime =
-  async function calculateAssetValueAtGivenTime() {
-    try {
-      const assetId = this.asset
-      const myAsset = await Asset.findById(assetId)
-      const assetValue = myAsset.calculateAssetValue()
-      this.valueAtGivenTime = assetValue
-      return assetValue
-    } catch (error) {
-      
-    }
-  };
 
 const Transaction = model("Transaction", transactionSchema);
 
