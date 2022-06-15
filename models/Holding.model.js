@@ -15,6 +15,7 @@ const holdingSchema = new Schema(
       require: true,
     },
     amount: { type: Number, require: true },
+    price: Number,
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
@@ -28,6 +29,8 @@ holdingSchema.methods.calculateHoldingValue =
       const assetId = this.asset;
       const myAsset = await Asset.findById(assetId);
       const assetValue = await myAsset.calculateAssetValue();
+      this.price = assetValue * this.amount;
+      await this.save()
       return assetValue * this.amount;
     } catch (error) {
       console.error(error);

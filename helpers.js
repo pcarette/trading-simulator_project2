@@ -28,16 +28,20 @@ async function createHolding(userId, assetId, newTransaction) {
   const createdHolding = await Holding.create({
     user: userId,
     asset: assetId,
-    amount: newTransaction.amount,
+    amount: Math.abs(newTransaction.amount),
   });
   return createdHolding;
 }
 async function updateHolding(holding, newTransaction) {
-  const newAmount = holding.amount + newTransaction.amount;
+  const newAmount = holding.amount + Math.abs(newTransaction.amount);
   console.log("newAmount", newAmount);
-  const updatedHolding = await Holding.findByIdAndUpdate(holding._id, {
-    amount: newAmount,
-  });
+  const updatedHolding = await Holding.findByIdAndUpdate(
+    holding._id,
+    {
+      amount: newAmount,
+    },
+    { new: true }
+  );
   return updatedHolding;
 }
 

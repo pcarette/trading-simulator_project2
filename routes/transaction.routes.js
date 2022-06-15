@@ -64,9 +64,17 @@ router.post("/", isAuthenticated, async (req, res, next) => {
     });
     if (transactionType === "BUY") {
       if (!foundHolding) {
-        createHolding(userId, assetId, createdTransaction);
+        const createdHolding = await createHolding(
+          userId,
+          assetId,
+          createdTransaction
+        );
+        res.status(200).json({ createdTransaction, createdHolding });
+        return;
       } else {
-        updateHolding(foundHolding, createdTransaction);
+        const updatedHolding = await updateHolding(foundHolding, createdTransaction);
+        res.status(200).json({ createdTransaction, updatedHolding });
+        return;
       }
     }
 
@@ -75,7 +83,9 @@ router.post("/", isAuthenticated, async (req, res, next) => {
         res.status(401).json({ message: `You don't have any holdings` });
         return;
       } else {
-        updateHolding(foundHolding, createdTransaction);
+        const updatedHolding = updateHolding(foundHolding, createdTransaction);
+        res.status(200).json({ createdTransaction, updatedHolding });
+        return;
       }
     }
   } catch (error) {
@@ -107,6 +117,20 @@ router.get("/:id", isAuthenticated, async (req, res, next) => {
     const id = req.params.id;
     const transaction = await Transaction.findOne({ id, user: userId });
     res.status(200).json(transaction);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+//
+// Delete all transactions
+//
+router.delete("/", isAuthenticated, async (req, res, next) => {
+  try {
+    const userId = req.user._id;
+    await Transaction.deleteMany({ user: userId });
+    res.status(200);
   } catch (error) {
     console.log(error);
     next(error);
