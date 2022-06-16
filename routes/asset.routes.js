@@ -1,8 +1,9 @@
 const Asset = require("../models/Asset.model");
 const router = require("express").Router();
+const isAuthenticatedAndAdmin = require("../middleware/isAdmin");
 
 // Create one specific asset
-router.post("/", async (req, res, next) => {
+router.post("/", isAuthenticatedAndAdmin, async (req, res, next) => {
   try {
     const newAsset = await Asset.create(req.body);
     res.status(200).json(newAsset);

@@ -17,7 +17,4 @@ const isAuthenticatedAndAdmin = (req, res, next) => {
 };
 //
 
-module.exports = {
-  isAdmin,
-  isAuthenticatedAndAdmin,
-};
+module.exports = isAuthenticatedAndAdmin;

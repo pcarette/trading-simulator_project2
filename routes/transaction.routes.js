@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const isAuthenticated = require("../middleware/isAuthenticated");
+const isAuthenticatedAndAdmin = require("../middleware/isAdmin");
 const Asset = require("../models/Asset.model");
 const Holding = require("../models/Holding.model");
 const Transaction = require("../models/Transaction.model");
@@ -136,7 +137,7 @@ router.get("/:id", isAuthenticated, async (req, res, next) => {
 //
 // Delete all transactions
 //
-router.delete("/", isAuthenticated, async (req, res, next) => {
+router.delete("/", isAuthenticatedAndAdmin, async (req, res, next) => {
   try {
     const userId = req.user._id;
     await Transaction.deleteMany({ user: userId });
