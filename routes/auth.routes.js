@@ -7,7 +7,6 @@ const saltRounds = 10;
 
 // SignUp route
 router.post("/signup", async (req, res, next) => {
-  console.log("run");
   try {
     const { email, password } = req.body;
     // Checking if email is an empty string
@@ -39,14 +38,12 @@ router.post("/signup", async (req, res, next) => {
 
     // Checking for errors
   } catch (error) {
-    console.error(error);
     next(error);
   }
 });
 
 // Login route
 router.get("/login", async (req, res, next) => {
-  console.log('run');
   try {
     // Get body
     const { email, password } = req.body;
@@ -76,7 +73,6 @@ router.get("/login", async (req, res, next) => {
 
     // Check for errors
   } catch (error) {
-    console.error(error);
     next(error);
   }
 });
@@ -97,7 +93,6 @@ router.get("/verify", async (req, res, next) => {
 
     // if error, catch it and say token is invalid
   } catch (error) {
-    console.error(error);
     res.status(400).json({ message: "Invalid token" });
   }
 });

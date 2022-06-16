@@ -58,7 +58,6 @@ router.post("/buy", isAuthenticated, async (req, res, next) => {
       return;
     }
   } catch (error) {
-    console.log(error);
     next(error);
   }
 });
@@ -102,7 +101,6 @@ router.post("/sell", isAuthenticated, async (req, res, next) => {
     res.status(200).json({ createdTransaction, updatedHolding });
     return;
   } catch (error) {
-    console.log(error);
     next(error);
   }
 });
@@ -131,7 +129,6 @@ router.get("/:id", isAuthenticated, async (req, res, next) => {
     const transaction = await Transaction.findOne({ id, user: userId });
     res.status(200).json(transaction);
   } catch (error) {
-    console.log(error);
     next(error);
   }
 });
@@ -145,7 +142,6 @@ router.delete("/", isAuthenticated, async (req, res, next) => {
     await Transaction.deleteMany({ user: userId });
     res.status(200);
   } catch (error) {
-    console.log(error);
     next(error);
   }
 });
