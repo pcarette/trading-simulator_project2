@@ -10,6 +10,11 @@ const userSchema = new Schema(
       require: true,
     },
     password: { type: String, require: true },
+    role: {
+      type: String,
+      enum: ['admin', 'user'],
+      default: 'user',
+    },
     cash: Number,
     holdingsValue: Number,
   },
