@@ -50,7 +50,6 @@ router.get("/login", async (req, res, next) => {
 
     // Check email
     const foundEmail = await User.findOne({ email });
-    console.log('foundEmail', foundEmail);
     // Check password
     const isPasswordMatched = await bcrypt.compare(
       password,
@@ -88,7 +87,6 @@ router.get("/verify", async (req, res, next) => {
   try {
     // verify the web token
     const playload = jsonwebtoken.verify(token, process.env.TOKEN_SECRET);
-    console.log({ playload });
     // send the user the payload
     res.json({ token, playload });
 

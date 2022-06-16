@@ -18,14 +18,11 @@ const {
 router.post("/buy", isAuthenticated, async (req, res, next) => {
   try {
     const { asset, amount } = req.body;
-    console.log({ asset });
     const userId = req.user._id;
     const { cash } = await User.findById(userId);
     const holding = await Holding.findOne({ user: userId, asset });
     const myAsset = await Asset.findById(asset);
-    console.log({ myAsset });
     const myAssetValue = await myAsset.calculateAssetValue();
-    console.log({ myAssetValue });
 
     // Check if enough cash
     if (cash < myAssetValue * amount) {
@@ -115,7 +112,6 @@ router.get("/", isAuthenticated, async (req, res, next) => {
     const allUserTransactions = await Transaction.find({ user: userId });
     res.status(200).json(allUserTransactions);
   } catch (error) {
-    console.log(error);
     next(error);
   }
 });
