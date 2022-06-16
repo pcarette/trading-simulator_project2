@@ -15,7 +15,6 @@ router.get("/:id", isAuthenticated, async (req, res, next) => {
     });
     res.status(200).json(holding);
   } catch (error) {
-    console.log(error);
     next(error);
   }
 });
@@ -34,7 +33,6 @@ router.get("/", isAuthenticated, async (req, res, next) => {
 
     // To do: calculate Holding value
   } catch (error) {
-    console.log(error);
     next(error);
   }
 });

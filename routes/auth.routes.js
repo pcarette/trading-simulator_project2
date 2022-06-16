@@ -38,7 +38,6 @@ router.post("/signup", async (req, res, next) => {
 
     // Checking for errors
   } catch (error) {
-    console.error(error);
     next(error);
   }
 });
@@ -74,7 +73,6 @@ router.get("/login", async (req, res, next) => {
 
     // Check for errors
   } catch (error) {
-    console.error(error);
     next(error);
   }
 });
@@ -95,7 +93,6 @@ router.get("/verify", async (req, res, next) => {
 
     // if error, catch it and say token is invalid
   } catch (error) {
-    console.error(error);
     res.status(400).json({ message: "Invalid token" });
   }
 });

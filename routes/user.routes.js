@@ -8,7 +8,6 @@ router.get("/all", isAuthenticated, async (req, res, next) => {
     const allUsers = await User.find();
     res.status(200).json(allUsers);
   } catch (error) {
-    console.log(error);
     next(error);
   }
 });
@@ -22,7 +21,6 @@ router.get("/", isAuthenticated, async (req, res, next) => {
     myUser = await User.findById(userId);
     res.status(200).json(myUser);
   } catch (error) {
-    console.log(error);
     next(error);
   }
 });
@@ -34,7 +32,6 @@ router.get("/cash", isAuthenticated, async (req, res, next) => {
     const { cash } = await User.findById(id);
     res.status(200).json(cash);
   } catch (error) {
-    console.log(error);
     next(error);
   }
 });
@@ -47,7 +44,6 @@ router.get("/holdings", isAuthenticated, async (req, res, next) => {
     const holdingsValue = await myUser.calculateHoldingsValue();
     res.status(200).json(holdingsValue);
   } catch (error) {
-    console.log(error);
     next(error);
   }
 });
@@ -59,7 +55,6 @@ router.delete("/:id", isAuthenticated, async (req, res, next) => {
     await User.findByIdAndDelete(id);
     res.status(200).json({ message: "User successfully deleted" });
   } catch (error) {
-    console.error(error);
     next(error);
   }
 });
