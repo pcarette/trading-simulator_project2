@@ -78,18 +78,6 @@ router.get("/login", async (req, res, next) => {
   }
 });
 
-// Logout route
-router.get("/logout", async (req, res, next) => {
-  try {
-    // Get body
-    const userId = res.user._id
-
-    // Check for errors
-  } catch (error) {
-    next(error);
-  }
-});
-
 // Verify route
 router.get("/verify", async (req, res, next) => {
   // Get the bearer token from the header
