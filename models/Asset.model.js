@@ -1,5 +1,6 @@
 const { Schema, model, SchemaTypes } = require("mongoose");
 const axios = require("axios");
+require("dotenv/config");
 
 const assetSchema = new Schema(
   {
@@ -17,6 +18,27 @@ const assetSchema = new Schema(
 
 assetSchema.methods.calculateAssetValue = async function calculateAssetValue() {
   //To fetch with the API
+  if (this.category == "Crypto") {
+      try{
+
+          const promiseAssetValue = await axios(
+              `https://api.binance.com/api/v3/avgPrice?symbol=${this.symbol}USDT`
+              );
+              return promiseAssetValue.data.price;
+        } catch(err) {
+            console.log(err)
+        }
+  } else if (this.category == "Stock") {
+    try{
+        const TOKEN = process.env.IEXAPIKEY;
+        const promiseAssetValue = await axios(
+            `https://cloud.iexapis.com/stable/tops?token=${TOKEN}&symbols=${this.symbol}`
+            );
+           return promiseAssetValue.data[0].lastSalePrice;
+        } catch (err) {
+            console.log(err);
+        }
+  }
   let promiseAssetValue = await axios(
     `https://api.binance.com/api/v3/avgPrice?symbol=${this.symbol}USDT`
   );
