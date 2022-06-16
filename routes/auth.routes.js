@@ -7,7 +7,6 @@ const saltRounds = 10;
 
 // SignUp route
 router.post("/signup", async (req, res, next) => {
-  console.log("run");
   try {
     const { email, password } = req.body;
     // Checking if email is an empty string
@@ -46,7 +45,6 @@ router.post("/signup", async (req, res, next) => {
 
 // Login route
 router.get("/login", async (req, res, next) => {
-  console.log('run');
   try {
     // Get body
     const { email, password } = req.body;
