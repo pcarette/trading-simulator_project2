@@ -11,5 +11,6 @@ router.use('/user', require('./user.routes'))
 router.use('/transaction', require('./transaction.routes'))
 router.use('/holding', require('./holding.routes'))
 router.use('/asset', require('./asset.routes'))
+router.use('/reset', require('./resetaccount.routes'))
 
 module.exports = router;
