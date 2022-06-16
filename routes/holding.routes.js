@@ -24,7 +24,6 @@ router.get("/", isAuthenticated, async (req, res, next) => {
   try {
     const userId = req.user._id;
     const myUser = await User.findById(userId);
-    console.log(myUser);
     await myUser.calculateHoldingsValue();
     const holdings = await Holding.find({ user: userId }).populate("asset", {
       name: 1,

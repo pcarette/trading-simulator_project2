@@ -87,7 +87,6 @@ router.get("/verify", async (req, res, next) => {
   try {
     // verify the web token
     const playload = jsonwebtoken.verify(token, process.env.TOKEN_SECRET);
-    console.log({ playload });
     // send the user the payload
     res.json({ token, playload });
 

@@ -12,8 +12,8 @@ const isAuthenticated = async (req, res, next) => {
 
   try {
     const decodedJwt = jsonwebtoken.verify(token, process.env.TOKEN_SECRET);
-    const { username } = decodedJwt;
-    const user = await User.findOne({ username });
+    const { email } = decodedJwt;
+    const user = await User.findOne({ email });
     req.user = user;
   } catch (error) {
     console.error(error);

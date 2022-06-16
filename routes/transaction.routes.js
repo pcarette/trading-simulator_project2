@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const isAuthenticated = require("../middleware/isAuthenticated");
+const isAuthenticatedAndAdmin = require("../middleware/isAdmin");
 const Asset = require("../models/Asset.model");
 const Holding = require("../models/Holding.model");
 const Transaction = require("../models/Transaction.model");
@@ -17,14 +18,11 @@ const {
 router.post("/buy", isAuthenticated, async (req, res, next) => {
   try {
     const { asset, amount } = req.body;
-    console.log({ asset });
     const userId = req.user._id;
     const { cash } = await User.findById(userId);
     const holding = await Holding.findOne({ user: userId, asset });
     const myAsset = await Asset.findById(asset);
-    console.log({ myAsset });
     const myAssetValue = await myAsset.calculateAssetValue();
-    console.log({ myAssetValue });
 
     // Check if enough cash
     if (cash < myAssetValue * amount) {
@@ -114,7 +112,6 @@ router.get("/", isAuthenticated, async (req, res, next) => {
     const allUserTransactions = await Transaction.find({ user: userId });
     res.status(200).json(allUserTransactions);
   } catch (error) {
-    console.log(error);
     next(error);
   }
 });
@@ -136,7 +133,7 @@ router.get("/:id", isAuthenticated, async (req, res, next) => {
 //
 // Delete all transactions
 //
-router.delete("/", isAuthenticated, async (req, res, next) => {
+router.delete("/", isAuthenticatedAndAdmin, async (req, res, next) => {
   try {
     const userId = req.user._id;
     await Transaction.deleteMany({ user: userId });
