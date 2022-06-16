@@ -50,6 +50,7 @@ router.get("/login", async (req, res, next) => {
 
     // Check email
     const foundEmail = await User.findOne({ email });
+    console.log('foundEmail', foundEmail);
     // Check password
     const isPasswordMatched = await bcrypt.compare(
       password,
@@ -70,6 +71,18 @@ router.get("/login", async (req, res, next) => {
 
     // Connect user
     res.status(200).json({ isLoggedIn: true, authToken });
+
+    // Check for errors
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Logout route
+router.get("/logout", async (req, res, next) => {
+  try {
+    // Get body
+    const userId = res.user._id
 
     // Check for errors
   } catch (error) {
