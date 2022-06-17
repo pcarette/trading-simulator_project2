@@ -10,6 +10,37 @@ NodeJS | ExpressJS | MongoDB | Mongoose
 ## Features  
 On our app, just like a classic paper trading app, you can **buy** 📈 stocks/cryptos and **sell** 📉 them.
 
-## Postman documentation
+## Model
+- **User** (OneToMany relationship with Transaction & Holding) 
+  - email
+  - password
+  - role (either 'user' or 'admin')
+  - method.calculateHoldingsValue()
+
+- **Holding** (ManyToMany relationship with Asset) 
+  - userId
+  - assetId
+  - amount
+  - valueInDollars
+  - method.calculateHoldingValue()
+
+- **Transaction** (ManyToMany relationship with Asset)
+  - userId
+  - assetId
+  - transactionType
+  - amount
+  - valueAtGivenTime
+  - transactionPrice
+
+- **Asset**
+  - name
+  - symbol
+  - image
+  - method.calculateAssetValue()
+
+## Configuration
+Here is our API link (https://api-trading-simulator.herokuapp.com). You can find more information about how to use it in the postman documentation below.
+
+### Postman documentation
 To use our API, you can refer to our postman documentation 📜.
 https://documenter.getpostman.com/view/21225395/UzBjrnaW
