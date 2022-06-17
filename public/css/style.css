@@ -1,22 +1,48 @@
+@import url('https //fonts.googleapis.com/css family=poppins');
+
+
+body {
+    font-family: poppins;
+    background-image : url(./HeroSection.png);
+    color : white;
+}
 .central-content {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-flow: column;
+    /* flex-flow: column; */
     height: 40vh;
     width: 60 vw;
+    position: absolute;
+    top: 35vh;
+    /* display: flex; */
+    /* justify-content: center; */
+    flex-direction: column;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 53vw;
+    /* height: 18vh; */
+    /* font-size: 1.12em; */
+    border-radius: 20px;
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    left: 22.5vw;
 }
 
 header {
     display : flex;
     justify-content: space-between;
-    
 }
 
 ul {
+    position: absolute;
+    right: 5%;
+    gap : 40px;
     align-items: center;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    list-style-type: none;
 }
 
 form {
@@ -24,4 +50,32 @@ form {
     flex-flow: column;
     justify-content: space-evenly;
     height: 35vh;
+}
+
+.central-content-dashboard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40vh;
+    width: 60 vw;
+    position: absolute;
+    top: 35vh;
+    flex-direction: column;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 53vw;
+    border-radius: 20px;
+    left: 22.5vw;
+}
+
+.search-assets {
+    display: flex;
+    position: absolute;
+    left: 50vw;
+}
+
+.body-dashboard {
+    font-family: poppins;
+    background-image : url(./HeroSection.png);
+    color : white;
 }
