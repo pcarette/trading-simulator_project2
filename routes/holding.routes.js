@@ -8,11 +8,15 @@ router.get("/:id", isAuthenticated, async (req, res, next) => {
   try {
     const id = req.params.id;
     const userId = req.user._id;
-    let holding = await Holding.findOne({ id, user: userId });
+    let holding = await Holding.findOne({ _id: id, user: userId });
     await holding.calculateHoldingValue();
-    holding = await Holding.findOne({ id, user: userId }).populate("asset", {
-      name: 1,
-    });
+    holding = await Holding.findOne({ _id: id, user: userId }).populate(
+      "asset",
+      {
+        name: 1,
+      }
+    );
+    if(holding.)
     res.status(200).json(holding);
   } catch (error) {
     next(error);
