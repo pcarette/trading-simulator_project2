@@ -1,4 +1,5 @@
-const baseUrl = "https://api-trading-simulator.herokuapp.com";
+// const baseUrl = "https://api-trading-simulator.herokuapp.com";
+const baseUrl = "http://localhost:3000";
 
 // DOM manipulation
 const signupEmail = document.querySelector("#signup-email");
@@ -18,9 +19,11 @@ loginForm.addEventListener("submit", login);
 // SignUp my user
 async function signup(e) {
   e.preventDefault();
+  const emailValue = signupEmail.value
+  const passwordValue = signupPassword.value
   const newUser = await axios.post(`${baseUrl}/auth/signup`, {
-    email: signupEmail,
-    password: signupPassword,
+    email: emailValue,
+    password: passwordValue,
   });
   console.log(newUser);
 }
@@ -28,8 +31,11 @@ async function signup(e) {
 // LogIn my user
 async function login(e) {
   e.preventDefault();
-  await axios.post(`baseUrl${"/auth/login"}`, {
-    email,
-    password,
+  const emailValue = loginEmail.value
+  const passwordValue = loginPassword.value
+  const loggedUser = await axios.post(`${baseUrl}/auth/login`, {
+    email: emailValue,
+    password: passwordValue,
   });
+  console.log(loggedUser);
 }
