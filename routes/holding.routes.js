@@ -16,7 +16,6 @@ router.get("/:id", isAuthenticated, async (req, res, next) => {
         name: 1,
       }
     );
-    if(holding.)
     res.status(200).json(holding);
   } catch (error) {
     next(error);
