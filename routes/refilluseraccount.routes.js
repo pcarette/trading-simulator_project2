@@ -22,7 +22,7 @@ router.patch("/", isAuthenticated, async (req, res, next) => {
       { new: true }
     );
 
-    res.status(200).json(user);
+    res.status(200).json(user.cash);
   } catch (error) {
     console.log(error);
     next(error);
