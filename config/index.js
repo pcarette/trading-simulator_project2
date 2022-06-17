@@ -13,7 +13,7 @@ const cookieParser = require("cookie-parser");
 // unless the request if from the same domain, by default express wont accept POST requests
 const cors = require("cors");
 // const corsOptions ={
-//   origin:'*', 
+//   origin:'*',
 //   credentials:true,            //access-control-allow-credentials:true
 //   optionSuccessStatus:200,
 // }
@@ -27,10 +27,10 @@ module.exports = (app) => {
   // controls a very specific header to pass headers from the frontend
   app.use(
     cors({
-      origin:'*', 
+      origin: "*",
       credentials: true,
       // origin: process.env.ORIGIN || "http://localhost:3000",
-      optionSuccessStatus:200,
+      optionSuccessStatus: 200,
     })
   );
 
@@ -41,4 +41,5 @@ module.exports = (app) => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
+  // app.use(express.static(path.join(__dirname, "..", "public")));
 };

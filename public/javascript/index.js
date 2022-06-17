@@ -18,24 +18,37 @@ loginForm.addEventListener("submit", login);
 
 // SignUp my user
 async function signup(e) {
-  e.preventDefault();
-  const emailValue = signupEmail.value
-  const passwordValue = signupPassword.value
-  const newUser = await axios.post(`${baseUrl}/auth/signup`, {
-    email: emailValue,
-    password: passwordValue,
-  });
-  console.log(newUser);
+  try {
+    e.preventDefault();
+    const emailValue = signupEmail.value;
+    const passwordValue = signupPassword.value;
+    const newUser = await axios.post(`${baseUrl}/auth/signup`, {
+      email: emailValue,
+      password: passwordValue,
+    });
+    console.log(newUser);
+    window.location = "../html/userAccount.html";
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 // LogIn my user
 async function login(e) {
-  e.preventDefault();
-  const emailValue = loginEmail.value
-  const passwordValue = loginPassword.value
-  const loggedUser = await axios.post(`${baseUrl}/auth/login`, {
-    email: emailValue,
-    password: passwordValue,
-  });
-  console.log(loggedUser);
+  console.log('loginfunc');
+  try {
+    e.preventDefault();
+    // const jsonData = pm.response.json();
+    // pm.collectionVariables.set("auth_token", jsonData.authToken);
+    const emailValue = loginEmail.value;
+    const passwordValue = loginPassword.value;
+    const loggedUser = await axios.post(`${baseUrl}/auth/login`, {
+      email: emailValue,
+      password: passwordValue,
+    });
+    console.log(loggedUser);
+    window.location = "../html/userAccount.html";
+  } catch (error) {
+    console.error(error);
+  }
 }
