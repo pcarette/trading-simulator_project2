@@ -7,7 +7,11 @@ router.patch("/", isAuthenticated, async (req, res, next) => {
     const { cash } = await User.findOne(req.user._id);
 
     if (req.body.amount <= 0) {
-      res.status(400).json({ message: `You cannot add 0 or a negative value` });
+      res
+        .status(400)
+        .json({
+          message: `You cannot add 0 or a negative value to your account`,
+        });
     }
 
     const newBalance = (cash + req.body.amount).toFixed(2);
