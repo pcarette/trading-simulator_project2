@@ -2,5 +2,26 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-flow: column;
+    height: 40vh;
+    width: 60 vw;
+}
+
+header {
+    display : flex;
+    justify-content: space-between;
     
+}
+
+ul {
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+}
+
+form {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-evenly;
+    height: 35vh;
 }
