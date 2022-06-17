@@ -6,13 +6,11 @@ router.patch("/", isAuthenticated, async (req, res, next) => {
   try {
     const { cash } = await User.findOne(req.user._id);
 
-    if (req.body.amount === 0) {
-      res
-        .status(400)
-        .json({ error: true, reason: "Amount is null or equal to 0" });
+    if (req.body.amount <= 0) {
+      res.status(400).json({ message: `You cannot add 0 or a negative value` });
     }
 
-    const newBalance = Math.round(cash + req.body.amount, 2);
+    const newBalance = (cash + req.body.amount).toFixed(2);
 
     const user = await User.findOneAndUpdate(
       req.user._id,
@@ -21,10 +19,8 @@ router.patch("/", isAuthenticated, async (req, res, next) => {
       },
       { new: true }
     );
-
     res.status(200).json(user.cash);
   } catch (error) {
-    console.log(error);
     next(error);
   }
 });
